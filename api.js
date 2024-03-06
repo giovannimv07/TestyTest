@@ -157,12 +157,12 @@ exports.setApp = function (app, mongoose) {
 
 	// Email stufff=============================
 
-	app.post("/api/email", async (req, res, next) => {
+	app.post('/api/email', async (req, res, next) => {
 		// incoming: emaiTo
 		// outgoing: error
 
-		var error = "";
-		const { emailTo } = req.body;
+		var error = '';
+		const { emailTo, message, subject, link } = req.body;
 
 		const OAuth2 = google.auth.OAuth2;
 
@@ -196,9 +196,9 @@ exports.setApp = function (app, mongoose) {
 		const mailOptions = {
 			from: "bbbtesty@gmail.com",
 			to: emailTo,
-			subject: "Carlos is Testing an API Attempt 3",
+			subject: subject,
 			generateTextFromHTML: true,
-			html: "<a href='contactz.xyz'>Click Me!</a>",
+			html: `<div><p>${message}</p><a href='${link}'>Click Me!</a></div>`,
 		};
 
 		let ret;
