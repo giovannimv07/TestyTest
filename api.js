@@ -155,13 +155,13 @@ exports.setApp = function (app, mongoose) {
 		res.status(200).json(ret);
 	});
 
-	// Email stufff=============================
+	// Email stuff=============================
 
-	app.post('/api/email', async (req, res, next) => {
-		// incoming: emaiTo
+	app.post("/api/email", async (req, res, next) => {
+		// incoming: emailTo
 		// outgoing: error
 
-		var error = '';
+		var error = "";
 		const { emailTo, message, subject, link } = req.body;
 
 		const OAuth2 = google.auth.OAuth2;
