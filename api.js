@@ -5,6 +5,8 @@ require("mongoose");
 exports.setApp = function (app, mongoose) {
 	const User = require("./models/user.js");
 	const Card = require("./models/card.js");
+	const nodemailer = require("nodemailer");
+	const { google } = require("googleapis");
 	const generateToken = require("./utils/tokenUtils");
 
 	app.post("/api/register", async (req, res, next) => {
