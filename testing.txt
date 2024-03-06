@@ -1,0 +1,15 @@
+function sendMail(emial, token)
+{
+    // generate a route with token
+    Route ="verify/{token}";
+    // make the api call
+    fetch(api/email) {
+        emailTo = emaill
+        link = Route
+    }
+    // if no error, send to verify page
+    if (! error )
+    {
+        window.location.href = Route;
+    }
+}
