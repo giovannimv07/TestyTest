@@ -132,11 +132,6 @@ exports.setApp = function (app, mongoose) {
 		const results = await Card.find({
 			Card: { $regex: _search + ".*", $options: "i" },
 		});
-		// const db = client.db("COP4331Cards");
-		// const results = await db
-		// 	.collection("Cards")
-		// 	.find({ Card: { $regex: _search + ".*", $options: "i" } })
-		// 	.toArray();
 
 		var _ret = [];
 		for (var i = 0; i < results.length; i++) {
@@ -155,11 +150,11 @@ exports.setApp = function (app, mongoose) {
 		res.status(200).json(ret);
 	});
 
-	// Email stuff=============================
-
 	app.post("/api/email", async (req, res, next) => {
-		// incoming: emailTo
+		//===========================================
+		// incoming: emailTo, message, subject, link
 		// outgoing: error
+		//===========================================
 
 		var error = "";
 		const { emailTo, message, subject, link } = req.body;
