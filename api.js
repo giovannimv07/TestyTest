@@ -191,7 +191,7 @@ exports.setApp = function (app, mongoose) {
 		});
 
 		const mailOptions = {
-			from: "bbbtesty@gmail.com",
+			from: "BiteByByte <bbbtesty@gmail.com>",
 			to: emailTo,
 			subject: subject,
 			generateTextFromHTML: true,
