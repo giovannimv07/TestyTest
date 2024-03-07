@@ -200,15 +200,13 @@ exports.setApp = function (app, mongoose) {
 			html: `<div><p>${message}</p><a href='${link}'>Click Me!</a></div>`,
 		};
 
-		let ret;
 		smtpTransport.sendMail(mailOptions, (error, response) => {
-			error ? console.log(error) : console.log(response);
+			let ret = error ? { "response": "", "error": error.message } : { "response": "Success", "error": "" };
+			res.status(200).json(ret);
 			smtpTransport.close();
 			//return error ? "error in email" : "";
-			ret = { response: response, error: error };
 		});
 
-		res.status(200).json(ret);
 	});
 
 	// for checking email

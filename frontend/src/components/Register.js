@@ -23,9 +23,9 @@ function Register() {
 			password: password.value,
 			code: code,
 		};
-		console.log("Register obj: ", obj);
+		//console.log("Register obj: ", obj);
 		var js = JSON.stringify(obj);
-		console.log("Register js: ", js);
+		//console.log("Register js: ", js);
 
 		try {
 			const response = await fetch(bp.buildPath("api/register"), {
@@ -56,17 +56,20 @@ function Register() {
 			subject: "Email Verification Code",
 			link: "https://www.google.com/",
 		};
-		console.log("maily object: ", maily);
+		//console.log("maily object: ", maily);
+		//console.log("maily msg: ", maily.message);
 		let jst = JSON.stringify(maily);
+		//console.log("Maily: " + JSON.parse(jst));
 		try {
 			const mailing = await fetch(bp.buildPath("api/email"), {
 				method: "POST",
 				body: jst,
 				headers: { "Content-Type": "application/json" },
 			});
+			console.log("Mailing: " + JSON.stringify(mailing));
 
 			res = JSON.parse(await mailing.text());
-			console.log("Error: ", res);
+			//console.log("Error: ", res);
 
 			if (res.error) {
 				console.log(res.error);
@@ -130,7 +133,7 @@ function Register() {
 				<input
 					type="submit"
 					id="registerButton"
-					class="buttons"
+					className="buttons"
 					value="Do It"
 					onClick={doRegister}
 				/>
