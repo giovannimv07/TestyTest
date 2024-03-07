@@ -179,10 +179,10 @@ exports.setApp = function (app, mongoose) {
 		const accessToken = oauth2Client.getAccessToken();
 
 		const smtpTransport = nodemailer.createTransport({
-			service: "gmail",
+			service: process.env.SERVICE,
 			auth: {
-				type: "OAuth2",
-				user: "bbbtesty@gmail.com",
+				type: process.env.TYPE,
+				user: process.env.USER,
 				clientId: process.env.CLIENT_ID,
 				clientSecret: process.env.CLIENT_SECRET,
 				refreshToken: process.env.REFRESH,
@@ -191,7 +191,7 @@ exports.setApp = function (app, mongoose) {
 		});
 
 		const mailOptions = {
-			from: "BiteByByte <bbbtesty@gmail.com>",
+			from: process.env.FROM,
 			to: emailTo,
 			subject: subject,
 			generateTextFromHTML: true,
