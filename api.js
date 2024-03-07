@@ -7,20 +7,22 @@ exports.setApp = function (app, mongoose) {
 	const Card = require("./models/card.js");
 	const nodemailer = require("nodemailer");
 	const { google } = require("googleapis");
-	const generateToken = require("./utils/tokenUtils");
+	// const generateToken = require("./utils/tokenUtils");
 
 	app.post("/api/register", async (req, res, next) => {
 		//=======================================================
 		// incoming: firstName, lastName, email, username, password
 		// outgoing: error
 		//=======================================================
-		const { firstName, lastName, email, username, password } = req.body;
+		const { firstName, lastName, email, username, password, code } =
+			req.body;
 		const newUsers = new User({
 			FirstName: firstName,
 			LastName: lastName,
 			Email: email,
 			Login: username,
 			Password: password,
+			TokenKey: code,
 		});
 		var error = "";
 		try {
@@ -210,15 +212,22 @@ exports.setApp = function (app, mongoose) {
 	});
 
 	// for checking email
-	app.get("/api/verify/:token", async (req, res) => {
-		const { token } = req.params;
+	// Don't delete line 213 is fpr reference
+	// app.get("/api/verify/:token", async (req, res) => {
+	app.post("/api/verify", async (req, res, next) => {
+		//===========================================
+		// incoming: code
+		// outgoing: error
+		//===========================================
+		// const { token } = req.params;
+		const { code } = req.body;
 
 		try {
 			// Find the user in the database by the verification token
-			const user = await User.findOne({ TokenKey: token });
+			const user = await User.findOne({ TokenKey: code });
 
 			if (!user) {
-				return res.status(404).json("User not found");
+				return res.status(404).json("Invalid Code");
 			}
 
 			// Mark the user as verified

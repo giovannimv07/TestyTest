@@ -15,7 +15,6 @@ function Login() {
 
 		var obj = { login: loginName.value, password: loginPassword.value };
 		var js = JSON.stringify(obj);
-		console.log("Login receive:", obj);
 		try {
 			const response = await fetch(bp.buildPath("api/login"), {
 				method: "POST",

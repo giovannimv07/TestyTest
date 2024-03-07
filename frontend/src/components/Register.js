@@ -13,6 +13,7 @@ function Register() {
 
 	const doRegister = async (event) => {
 		event.preventDefault();
+		let code = Math.floor(100000 + Math.random() * 900000);
 
 		var obj = {
 			firstName: firstName.value,
@@ -20,8 +21,11 @@ function Register() {
 			email: email.value,
 			username: username.value,
 			password: password.value,
+			code: code,
 		};
+		console.log("Register obj: ", obj);
 		var js = JSON.stringify(obj);
+		console.log("Register js: ", js);
 
 		try {
 			const response = await fetch(bp.buildPath("api/register"), {
@@ -34,13 +38,45 @@ function Register() {
 
 			if (res.error) {
 				console.log(res.error);
-				//console.log("Suppose to read setMessage");
 				setMessage("Username is already taken.");
+				return;
 			} else {
 				setMessage("");
 				// window.location.href = "/";
 			}
 		} catch (e) {
+			console.log("register error");
+			alert(e.toString());
+			return;
+		}
+		// sending email after a susscesfull registration
+		let maily = {
+			emailTo: email.value,
+			message: "Please enter the following code: " + code,
+			subject: "Email Verification Code",
+			link: "https://www.google.com/",
+		};
+		console.log("maily object: ", maily);
+		let jst = JSON.stringify(maily);
+		try {
+			const mailing = await fetch(bp.buildPath("api/email"), {
+				method: "POST",
+				body: jst,
+				headers: { "Content-Type": "application/json" },
+			});
+
+			res = JSON.parse(await mailing.text());
+			console.log("Error: ", res);
+
+			if (res.error) {
+				console.log(res.error);
+				setMessage("Could not send verification email, try again");
+			} else {
+				setMessage("");
+				window.location.href = "/verify";
+			}
+		} catch (e) {
+			console.log("Mail error");
 			alert(e.toString());
 			return;
 		}
