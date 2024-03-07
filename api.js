@@ -166,14 +166,14 @@ exports.setApp = function (app, mongoose) {
 		const OAuth2 = google.auth.OAuth2;
 
 		const oauth2Client = new OAuth2(
-			"23471699850-ffffaboh9mqeq4pb59dcbi1e8o3tp1u9.apps.googleusercontent.com", // ClientID
-			"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", // Client Secret
-			"https://developers.google.com/oauthplayground" // Redirect URL
+			process.env.CLIENT_ID, // ClientID
+			process.env.CLIENT_SECRET, // Client Secret
+			process.env.REDIRECT_URIS
+			// Redirect URL
 		);
 
 		oauth2Client.setCredentials({
-			refresh_token:
-				"1//04ROIGOOQVs5rCgYIARAAGAQSNwF-L9IrzW2B-jwLkoxxhIw-DAjZaih2o_7GgVJExhoBIx4Tlx0UhU2NnjCODjM4IbO8EitQ9f0",
+			refresh_token: process.env.REFRESH,
 		});
 
 		const accessToken = oauth2Client.getAccessToken();
@@ -183,11 +183,9 @@ exports.setApp = function (app, mongoose) {
 			auth: {
 				type: "OAuth2",
 				user: "bbbtesty@gmail.com",
-				clientId:
-					"23471699850-ffffaboh9mqeq4pb59dcbi1e8o3tp1u9.apps.googleusercontent.com",
-				clientSecret: "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",
-				refreshToken:
-					"1//04ROIGOOQVs5rCgYIARAAGAQSNwF-L9IrzW2B-jwLkoxxhIw-DAjZaih2o_7GgVJExhoBIx4Tlx0UhU2NnjCODjM4IbO8EitQ9f0",
+				clientId: process.env.CLIENT_ID,
+				clientSecret: process.env.CLIENT_SECRET,
+				refreshToken: process.env.REFRESH,
 				accessToken: accessToken,
 			},
 		});
@@ -201,12 +199,13 @@ exports.setApp = function (app, mongoose) {
 		};
 
 		smtpTransport.sendMail(mailOptions, (error, response) => {
-			let ret = error ? { "response": "", "error": error.message } : { "response": "Success", "error": "" };
+			let ret = error
+				? { response: "", error: error.message }
+				: { response: "Success", error: "" };
 			res.status(200).json(ret);
 			smtpTransport.close();
 			//return error ? "error in email" : "";
 		});
-
 	});
 
 	// for checking email
