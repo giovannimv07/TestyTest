@@ -7,7 +7,6 @@ exports.setApp = function (app, mongoose) {
 	const Card = require("./models/card.js");
 	const nodemailer = require("nodemailer");
 	const { google } = require("googleapis");
-	// const generateToken = require("./utils/tokenUtils");
 
 	app.post("/api/register", async (req, res, next) => {
 		//=======================================================
@@ -68,6 +67,27 @@ exports.setApp = function (app, mongoose) {
 			ret = { error: "Login/Password incorrect" };
 		}
 		res.status(200).json(ret);
+	});
+	app.post("/api/deleteUser", async (req, res, next) => {
+		//=======================================================
+		// incoming: userId
+		// outgoing: error
+		//=======================================================
+		const { userId } = req.body;
+		var error = "";
+		try {
+			const user = await User.findOneAndDelete({ _id: userId });
+
+			if (!user) {
+				error = "User not found";
+				return res.status(409).json({ error: error });
+			}
+		} catch (e) {
+			error = e.toString();
+			return res.status(409).json({ error: error });
+		}
+		error = "Account deleted Successfully";
+		res.status(200).json({ error: error });
 	});
 	app.post("/api/addcard", async (req, res, next) => {
 		//=======================================================
@@ -208,9 +228,6 @@ exports.setApp = function (app, mongoose) {
 		});
 	});
 
-	// for checking email
-	// Don't delete line 213 is fpr reference
-	// app.get("/api/verify/:token", async (req, res) => {
 	app.post("/api/verify", async (req, res, next) => {
 		//===========================================
 		// incoming: code
