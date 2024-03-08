@@ -24,7 +24,9 @@ function Verify() {
 				setMessage("");
 				window.location.href = "/";
 			}
-		} catch (e) {}
+		} catch (e) {
+			setMessage(e.toString());
+		}
 	};
 
 	return (
@@ -37,6 +39,15 @@ function Verify() {
 					id="code"
 					placeholder="ex:123456"
 					ref={(c) => (code = c)}
+				/>
+				<br />
+				<br />
+				<input
+					type="submit"
+					id="verifyButton"
+					className="buttons"
+					value="Submit"
+					onClick={doVerify}
 				/>
 			</form>
 			<span id="codeResult">{message}</span>

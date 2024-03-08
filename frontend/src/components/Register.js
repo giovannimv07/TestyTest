@@ -134,7 +134,7 @@ function Register() {
 					type="submit"
 					id="registerButton"
 					className="buttons"
-					value="Do It"
+					value="Submit"
 					onClick={doRegister}
 				/>
 			</form>

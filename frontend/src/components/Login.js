@@ -78,7 +78,7 @@ function Login() {
 					type="submit"
 					id="loginButton"
 					className="buttons"
-					value="Do It"
+					value="Submit"
 					onClick={doLogin}
 				/>
 			</form>
