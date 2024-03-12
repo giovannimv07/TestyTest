@@ -202,7 +202,7 @@ exports.setApp = function (app, mongoose) {
 			service: process.env.SERVICE,
 			auth: {
 				type: process.env.TYPE,
-				user: process.env.USER,
+				user: process.env.USERBBB,
 				clientId: process.env.CLIENT_ID,
 				clientSecret: process.env.CLIENT_SECRET,
 				refreshToken: process.env.REFRESH,
